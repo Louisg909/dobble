@@ -1,21 +1,21 @@
 # Dobble
-## Introcution
+## Introduction
 
-Custom dobble game creator
+Custom Dobble game creator
 
-Really enjoyed playing the [original dobble](https://www.dobblegame.com/en/homepage/) with my family, and we decided it would be fun to make a custom game. Rather than painstakingly making it by and, I wanted to make a program that could automate it.
+Really enjoyed playing the [original Dobble](https://www.dobblegame.com/en/homepage/) with my family, and we decided it would be fun to make a custom game. Rather than painstakingly making it by and, I wanted to make a program that could automate it.
 
 ---
 
 ## Logic behind the card creation:
 The cards are designed so that every card has one icon in common with every single other card. The logic of how this works is explained in a very intuitive way in the video by Matt Parker [How does Dobble (Spot It) work?](https://www.youtube.com/watch?v=VTDKqW_GLkw).
 
-Bellow is a simple explination of it:
-*explination of the logic with diagrams*
+Bellow is a simple explanation of it:
+*explanation of the logic with diagrams*
 
-Having a network with every node being a card, and connecting with every card, would cause there to be a lot of icons per card, and would baloon so quickly. Rather than this, the cards can be put on a simple square table, with lines in a grid, and diagonals connecting each card togeteher. This is then extended by pushing these lines so paralell lines meet at their vanishing points, and all of these vanishing points can be connected by a line too. Each of these lines would be a different icon.
+Having a network with every node being a card, and connecting with every card, would cause there to be a lot of icons per card, and would balloon so quickly. Rather than this, the cards can be put on a simple square table, with lines in a grid, and diagonals connecting each card together. This is then extended by pushing these lines so parallel lines meet at their vanishing points, and all of these vanishing points can be connected by a line too. Each of these lines would be a different icon.
 
-For example, a simplifed 13-icon diagram of dobble would use a 3x3 grid would be used:
+For example, a simplified 13-icon diagram of Dobble would use a 3x3 grid would be used:
 
 ![13-icon-dobble-diagram](assets/13_icon_dobble.png)
 
@@ -36,12 +36,12 @@ grid = [[Card() for _ in range(length)] for _ in range(length)]
 ```
 
 > The number of cards is determined by the variable `length` which signifies the number of rows in the table. The number of cards is calculated from the length as: `length**2 + length + 1`, and the length can be found from the total number of cards by doing the quadratic formula, but the length has to be a whole number, and not all number of cards would give this length as a whole number.
-> The samllest, valid card numbers are: 7, 13, 21, 31, 43, 57, 73, and 91. Some cards can be removed like in real dobble, but I don't see much point in that.
+> The smallest, valid card numbers are: 7, 13, 21, 31, 43, 57, 73, and 91. Some cards can be removed like in real Dobble, but I don't see much point in that.
 
-After this, the items just need to be added to the list. The number of lines in the grid is the number of rows + 1, or `length + 1`. The plus 1 is just the columns though so can be done seperately as it is always the same. All the rest is just connecting the top index with the column at the end, one down each time. Basically, I can work out the gradient and pick the indecies that fit that gradient each time, and move down by one once I hit the end. (I am using numbers to signify the icons, but one line will be added to the `.add_icon()` method to attatch the actual icon according to a dictionary - or the specification of the icon designs might be added later all together.)
+After this, the items just need to be added to the list. The number of lines in the grid is the number of rows + 1, or `length + 1`. The plus 1 is just the columns though so can be done separately as it is always the same. All the rest is just connecting the top index with the column at the end, one down each time. Basically, I can work out the gradient and pick the indices that fit that gradient each time, and move down by one once I hit the end. (I am using numbers to signify the icons, but one line will be added to the `.add_icon()` method to attach the actual icon according to a dictionary - or the specification of the icon designs might be added later all together.)
 
 ```python
-# The flat horizontal and vertical lines can be given their values sepertely
+# The flat horizontal and vertical lines can be given their values separately
 for n in range(length):
     for m in range(len(grid[n])):
         grid[n][m].add_icon(n+1,length + m+1)
@@ -65,7 +65,7 @@ for row_no in range(len(grid)-1):
         icon_no += 1
     vanishing_points.append(Card(vanishing_card_icons))
 
-# connect all the vanishing point cards togetheCard(vanish1_icons) , Card(vanish2_icons)]
+# connect all the vanishing point cards together: [Card(vanish1_icons) , Card(vanish2_icons)]
 [n.add_icon(icon_no) for n in vanishing_points]
 
 # Add all cards to the deck:
@@ -78,7 +78,7 @@ deck = [m for n in grid for m in n] + vanishing_points
 
 
 ## Adding variety to the icons on the card
-- Addng some positional jitter
+- Adding some positional jitter
 - Adding some rotation
 - Randomising size
 - Ensuring no overlap of icons 
@@ -86,8 +86,3 @@ deck = [m for n in grid for m in n] + vanishing_points
 
 ---
 ## Rendering cards to a printable set
-
-
-
-
-
