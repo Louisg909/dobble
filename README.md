@@ -13,13 +13,15 @@ The cards are designed so that every card has one icon in common with every sing
 Bellow is a simple explination of it:
 *explination of the logic with diagrams*
 
-## Coding the cards
-### Idea 1
-One idea I have, is to simulate the grid, basically create a load of empty card objects in a 2D, 7x7 array with a load of empty `Card` objects, and then add items to the cards on each "line" through the array (in addition to the ones that are at the vanishing points, lastly adding an item to all of the vanishing point cards)
+Having a network with every node being a card, and connecting with every card, would cause there to be a lot of icons per card, and would baloon so quickly. Rather than this, the cards can be put on a simple square table, with lines in a grid, and diagonals connecting each card togeteher. This is then extended by pushing these lines so paralell lines meet at their vanishing points, and all of these vanishing points can be connected by a line too. Each of these lines would be a different icon.
 
-For example, Pseudo-code for a simplifed 13-icon version of dobble, a 3x3 grid would be used:
+For example, a simplifed 13-icon diagram of dobble would use a 3x3 grid would be used:
 
 ![13-icon-dobble-diagram](assets/13_icon_dobble.png)
+
+## Coding the cards
+### Idea 1
+To simulate the grid, in order to establish all the cards, I basically create a load of empty card objects in a 2D, square array with a load of empty `Card` objects, and then add items to the cards on each "line" through the array (in addition to the ones that are at the vanishing points, lastly adding an item to all of the vanishing point cards)
 
 So an empty `Card` class would be initiated in each of these spots:
 
@@ -30,20 +32,16 @@ class Card:
     def add_icon(self, icon):
         self.icons.append(icon)
 
-grid = [[Card() for _ in range(3)] for _ in range(3)]
-vanishing_points = [Card() for _ in range(4)]
+# First, the grid with empty cards is initialised
+grid = [[Card() for _ in range(length)] for _ in range(length)]
 ```
-
-After this, the items just need to be added to the list. The number of lines in the grid is the number of rows + 1, or `len(grid) + 1`. The plus 1 is just the columns though so can be done seperately as it is always the same. All the rest is just connecting the top index with the column at the end, one down each time. Basically, I can work out the gradient and pick the indecies that fit that gradient each time, and move down by one once I hit the end. (I am using numbers to signify the icons, but one line will be added to the `.add_icon()` method to attatch the actual icon according to a dictionary - or the specification of the icon designs might be added later all together.)
 
 > The number of cards is determined by the variable `length` which signifies the number of rows in the table. The number of cards is calculated from the length as: `length**2 + length + 1`, and the length can be found from the total number of cards by doing the quadratic formula, but the length has to be a whole number, and not all number of cards would give this length as a whole number.
 > The samllest, valid card numbers are: 7, 13, 21, 31, 43, 57, 73, and 91. Some cards can be removed like in real dobble, but I don't see much point in that.
 
+After this, the items just need to be added to the list. The number of lines in the grid is the number of rows + 1, or `len(grid) + 1`. The plus 1 is just the columns though so can be done seperately as it is always the same. All the rest is just connecting the top index with the column at the end, one down each time. Basically, I can work out the gradient and pick the indecies that fit that gradient each time, and move down by one once I hit the end. (I am using numbers to signify the icons, but one line will be added to the `.add_icon()` method to attatch the actual icon according to a dictionary - or the specification of the icon designs might be added later all together.)
+
 ```python
-# First, the grid with empty cards is initialised
-grid = [[Card() for _ in range(length)] for _ in range(length)]
-
-
 # The flat horizontal and vertical lines can be given their values sepertely
 for n in range(length):
     for m in range(len(grid[n])):
