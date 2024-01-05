@@ -1,7 +1,12 @@
 # Dobble
+## Introcution
+
 Custom dobble game creator
+
 Really enjoyed playing the [original dobble](https://www.dobblegame.com/en/homepage/) with my family, and we decided it would be fun to make a custom game. Rather than painstakingly making it by and, I wanted to make a program that could automate it.
+
 ---
+
 ## Logic behind the card creation:
 The cards are designed so that every card has one icon in common with every single other card. The logic of how this works is explained in a very intuitive way in the video by Matt Parker [How does Dobble (Spot It) work?](https://www.youtube.com/watch?v=VTDKqW_GLkw).
 
