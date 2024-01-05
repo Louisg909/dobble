@@ -19,7 +19,7 @@ One idea I have, is to simulate the grid, basically create a load of empty card 
 
 For example, Pseudo-code for a simplifed 13-icon version of dobble, a 3x3 grid would be used:
 
-![13-icon-dobble-diagram](readme_assets/13_icon_dobble.png)
+![13-icon-dobble-diagram](assets/13_icon_dobble.png)
 
 So an empty `Card` class would be initiated in each of these spots:
 
