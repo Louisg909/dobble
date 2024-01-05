@@ -1,17 +1,17 @@
 import random
 from icon_dict import icon_dict
+from PIL import Image
 
 # 55 cards but can have 57
 # 57 icons
 
 
 class Icon:
-    def __init__(self,icon_type,position_value):
+    def __init__(self,icon_type):
         self.icon_type = icon_type
-        self.position = position_value
-        self.radius = random.uniform(0.7,1)
+        self.radius_factor = random.uniform(0.15,0.3) # size as a fraction of the radius of the entire card
         self.rotation = random.randint(0,360)
-        self.jitter = tuple([random.uniform(0,1) for _ in range(3)])
+        self.jitter = tuple([random.uniform(-1,1) for _ in range(2)]) # I had this as 3 for ages.. as if I would have 3D jitter lol
     
     def __mul__(self,other): # resizing
         # check if positions are next to eachother
@@ -21,12 +21,22 @@ class Icon:
         self.radius -= 0.75 * overlap
         other.radius -= 0.75 * overlap
 
-        
+    def open_formatted_asset(self,background_radius):
+        asset = Image.open(f"icons/{icon_type}.png")
 
-#class Card:
-#    def __init__(self, *icons):
-#        self.icons = icons
-#        # every card has icon of each size
+        # resize asset
+        if (old_width := asset.width) >= (old_height := asset.height):
+            new_width = background_radius * self.radius_factor
+            asset = asset.resize((new_width, old_height * old_width / new_width))
+        else:
+            new_height = background_radius * self.radius_factor
+            asset = asset.resize((old_width * old_height / new_height, new_height))
+        
+        # rotate asset
+        asset = asset.rotate(self.rotation)
+        
+        return asset
+        
 
 def print_grid(grid):
     string = "\t"
@@ -45,8 +55,6 @@ class Card:
         self.icons += [icon_dict[icon] for icon in icons]
     def __repr__(self):
         return "C" + str(self.icons)
-
-# length = len(icon_dict)
 
 length = 3 # number of rows - total cards = length**2 + length + 1
 
